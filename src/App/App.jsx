@@ -1,33 +1,12 @@
-import { filter_icon, search_icon } from '../assets';
+import { TaskBar } from '../components/task-bar';
+import { Tasks } from '../components/tasks';
 
 function App() {
   return (
-    <section className='max-w-3xl mx-auto'>
-      <main className='flex justify-between h-14'>
-        <button className='w-48 h-14 bg-slate-300 text-black rounded-3xl'>
-          Agregar tarea
-        </button>
+    <section className='max-w-5xl h-[40rem] mx-8 border mt-10'>
+      <TaskBar />
 
-        <div className='flex border-solid border-2'>
-          <input type='search' placeholder='Titulo de la tarea' />
-          <button className='bg-blue-500'>
-            <img src={search_icon('red')} alt='Icono para buscar tarea' />
-          </button>
-        </div>
-
-        <button>
-          <img src={filter_icon()} alt='Icono para filtrar tareas' />
-        </button>
-      </main>
-
-      <article>
-        <header>
-          <p>Titulo</p>
-          <p>Descripción</p>
-          <p>Imagenes</p>
-          <p>Acciones</p>
-        </header>
-      </article>
+      <Tasks />
     </section>
   );
 }
