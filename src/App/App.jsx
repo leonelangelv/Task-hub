@@ -3,7 +3,7 @@ import { Tasks } from '../components/tasks';
 
 function App() {
   return (
-    <section className='max-w-5xl h-[40rem] mx-8 border mt-10'>
+    <section className='max-w-5xl h-[40rem] mt-10 px-2'>
       <TaskBar />
 
       <Tasks />
