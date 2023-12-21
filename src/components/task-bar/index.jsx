@@ -1,4 +1,6 @@
 import { filter_icon, search_icon } from '../../assets';
+import { useModal } from '../../hooks/useModal';
+import { AddTask } from '../modals/add-task';
 
 const styles = {
   task_bar: {
@@ -19,9 +21,23 @@ const styles = {
 };
 
 export const TaskBar = () => {
+  const [isOpenAddTaskModal, openAddTaskModal, closeAddTaskModal] =
+    useModal(false);
+
   return (
     <header className={`${styles.task_bar.style}`}>
-      <button className={`${styles.task_bar.button_add}`}>Agregar tarea</button>
+      {isOpenAddTaskModal && (
+        <AddTask
+          isOpenModal={isOpenAddTaskModal}
+          closeModal={closeAddTaskModal}
+        />
+      )}
+      <button
+        className={`${styles.task_bar.button_add}`}
+        onClick={openAddTaskModal}
+      >
+        Agregar tarea
+      </button>
 
       <div className={`${styles.task_bar.search.style}`}>
         <input
