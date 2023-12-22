@@ -32,7 +32,7 @@ const twStyles = {
   }
 };
 
-import cssStyles from './AddTask.module.css';
+import cssStyles from '../styles/AddTask.module.css';
 
 export const AddTask = ({ closeModal }) => {
   const [animationModal, setAnimationModal] = useState(cssStyles['open-modal']);
