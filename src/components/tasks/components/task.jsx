@@ -1,9 +1,14 @@
+import { PropTypes } from 'prop-types';
 import {
   checkmark_icon,
   pen_icon,
   trash_icon,
   xmark_icon
 } from '../../../assets';
+import { useContext } from 'react';
+import { TaskContext } from '../../../context/TaskContext';
+import { useModal } from '../../../hooks/useModal';
+import { UpdateTask } from '../../modals/update-task';
 
 const styles = {
   task_container: {
@@ -21,30 +26,52 @@ const styles = {
   }
 };
 
-export const Task = () => {
+export const Task = ({ task }) => {
+  const { deleteTask } = useContext(TaskContext);
+
+  const handleDeleteTask = (id) => {
+    const deleteConfirm = confirm('¿Desea eliminar esta tarea?');
+    if (deleteConfirm) {
+      deleteTask(id);
+    }
+  };
+
+  const [isOpenUpdateTaskModal, openUpdateTaskModal, closeUpdateTaskModal] =
+    useModal(false);
+
   return (
     <article className={styles.task_container.style}>
+      {isOpenUpdateTaskModal && (
+        <UpdateTask closeModal={closeUpdateTaskModal} task={task} />
+      )}
+
       <div className={styles.task_container.view_task}></div>
-      <h2 className={styles.task_container.title}>Titulo de la tarea</h2>
-      <p className={styles.task_container.description}>
-        Descripción de la tarea, esto es solo para rrelleno deaaa que se pasaba
-        ya no sabe lo que dice este tipo bueeee que le pasaba noooooo que decia
-      </p>
+
+      <h2 className={styles.task_container.title}>{task.title}</h2>
+
+      <p className={styles.task_container.description}>{task.description}</p>
+
       <div className={styles.task_container.hasImage}>
         <img
-          src={checkmark_icon('#00C136')}
+          src={
+            task.images.length > 0
+              ? checkmark_icon('#00C136')
+              : xmark_icon('#FF0000')
+          }
           alt='Checkmark icon for the tasks whit images'
         />
       </div>
+
       <div className={styles.task_container.actions.style}>
-        <button>
+        <button onClick={openUpdateTaskModal}>
           <img
             src={pen_icon('#C2DFE3')}
             alt='Pencil icon for editing the tasks'
             className={styles.task_container.actions.icons}
           />
         </button>
-        <button>
+
+        <button onClick={() => handleDeleteTask(task.id)}>
           <img
             src={trash_icon('#FF0000')}
             alt='Trash icon for deleting the tasks'
@@ -54,4 +81,8 @@ export const Task = () => {
       </div>
     </article>
   );
+};
+
+Task.propTypes = {
+  task: PropTypes.object
 };
