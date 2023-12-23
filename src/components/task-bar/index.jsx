@@ -1,4 +1,4 @@
-import { filter_icon, search_icon } from '../../assets';
+import { search_icon } from '../../assets';
 import { useModal } from '../../hooks/useModal';
 import { AddTask } from '../modals/add-task';
 
@@ -14,9 +14,7 @@ const styles = {
         'rounded-tl-3xl rounded-bl-3xl bg-slate-300 placeholder:text-black px-7 outline-none',
       button:
         'bg-gray-800 w-16 flex justify-center items-center rounded-tr-3xl rounded-br-3xl'
-    },
-    button_filter:
-      'h-10 md:h-14 bg-gray-800 w-[76.85px] rounded-3xl flex justify-center items-center'
+    }
   }
 };
 
@@ -53,14 +51,6 @@ export const TaskBar = () => {
           />
         </button>
       </div>
-
-      <button className={`${styles.task_bar.button_filter}`}>
-        <img
-          src={filter_icon('white')}
-          alt='Icono para filtrar tareas'
-          className='h-5 md:h-8'
-        />
-      </button>
     </header>
   );
 };
