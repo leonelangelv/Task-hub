@@ -36,19 +36,12 @@ const twStyles = {
 
 import cssStyles from '../styles/AddTask.module.css';
 
-const initialValues = {
-  id: 0,
-  title: '',
-  description: '',
-  images: []
-};
-
-export const AddTask = ({ closeModal }) => {
-  const { addTask, taskId } = useContext(TaskContext);
+export const UpdateTask = ({ closeModal, task }) => {
+  const { updateTask } = useContext(TaskContext);
 
   const [animationModal, setAnimationModal] = useState(cssStyles['open-modal']);
 
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState(task.images);
 
   const [isDragOver, setIsDragOver] = useState(false);
 
@@ -88,16 +81,15 @@ export const AddTask = ({ closeModal }) => {
     processImageFile(file);
   };
 
-  const { handleChange, handleSubmit } = useForm({
-    initialValues,
+  const { values, handleChange, handleSubmit } = useForm({
+    initialValues: task,
     onSubmit: (value) => {
-      const finalValue = {
+      let finalValue = {
         ...value,
-        id: taskId,
         images
       };
-      addTask(finalValue);
-      handleCloseModal();
+
+      updateTask(task.id, finalValue);
     }
   });
 
@@ -125,6 +117,7 @@ export const AddTask = ({ closeModal }) => {
             name='title'
             id='title'
             type='text'
+            value={values.title}
             className={twStyles.add_task.modal.input}
             placeholder='Titulo de la tarea'
             onChange={handleChange}
@@ -132,6 +125,7 @@ export const AddTask = ({ closeModal }) => {
           <textarea
             name='description'
             id='description'
+            value={values.description}
             className={twStyles.add_task.modal.textarea}
             placeholder='Descripción de la tarea'
             onChange={handleChange}
@@ -172,7 +166,7 @@ export const AddTask = ({ closeModal }) => {
               htmlFor='images'
               className={twStyles.add_task.modal.image_box.label}
             >
-              Arrastre o presione para agregar imagen (solo 2)
+              Arrastre o presione para actualizar imagen (solo 2)
             </label>
             <input
               type='file'
@@ -184,8 +178,12 @@ export const AddTask = ({ closeModal }) => {
             />
           </div>
 
-          <button className={twStyles.add_task.modal.button} type='submit'>
-            Añadir tarea
+          <button
+            className={twStyles.add_task.modal.button}
+            type='submit'
+            onClick={handleCloseModal}
+          >
+            Guardar tarea
           </button>
         </form>
       </div>
@@ -193,6 +191,7 @@ export const AddTask = ({ closeModal }) => {
   );
 };
 
-AddTask.propTypes = {
-  closeModal: PropTypes.func
+UpdateTask.propTypes = {
+  closeModal: PropTypes.func,
+  task: PropTypes.object
 };
