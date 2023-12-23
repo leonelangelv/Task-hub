@@ -1,13 +1,14 @@
 import { PropTypes } from 'prop-types';
 import { createContext, useState } from 'react';
-import { taskSample } from '../data/taskSample';
 
-export const TaskContext = createContext(taskSample);
+export const TaskContext = createContext([]);
 
 export const TaskProvider = ({ children }) => {
-  const [tasks, setTasks] = useState(taskSample);
+  const [tasks, setTasks] = useState([]);
+  const [taskId, setTaskId] = useState(5);
 
   const addTask = (newTask) => {
+    setTaskId(taskId + 1);
     setTasks([...tasks, newTask]);
   };
 
@@ -23,6 +24,7 @@ export const TaskProvider = ({ children }) => {
 
   const values = {
     tasks,
+    taskId,
     addTask,
     updateTask,
     deleteTask
